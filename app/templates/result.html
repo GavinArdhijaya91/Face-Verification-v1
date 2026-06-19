@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity Through Time — Biometric Verification Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/globals.css">
+    <link rel="stylesheet" href="static/css/animations.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#0B1020] text-white font-inter min-h-screen flex flex-col lg:flex-row">
+
+    <!-- Left Sidebar -->
+    <aside class="w-full lg:w-80 glass-card border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between shrink-0 p-6 lg:h-screen lg:sticky lg:top-0 z-40">
+        <div class="flex flex-col gap-8">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 to-indigo-600 flex items-center justify-center glow-indigo relative overflow-hidden group">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-orbitron font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">AEGIS AI</h1>
+                    <p class="text-[10px] text-slate-400 tracking-widest uppercase font-semibold">Biometric Lab v1.0</p>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex flex-col gap-2">
+                <p class="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2">Systems</p>
+                <a href="/" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-cyan-400 text-sm font-semibold transition-all duration-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1.008 1.008 0 001-1V5a1.008 1.008 0 00-1-1H5a1.008 1.008 0 00-1 1v2a1.008 1.008 0 001 1zm0 12h2a1.008 1.008 0 001-1v-2a1.008 1.008 0 00-1-1H5a1.008 1.008 0 00-1 1v2a1.008 1.008 0 001 1zm12 0h2a1.008 1.008 0 001-1v-2a1.008 1.008 0 00-1-1h-2a1.008 1.008 0 00-1 1v2a1.008 1.008 0 001 1z"></path>
+                    </svg>
+                    Face Verification
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border border-transparent hover:bg-white/5 text-slate-400 hover:text-slate-100 text-sm font-semibold transition-all duration-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Database Metrics
+                </a>
+            </nav>
+
+            <!-- Quote Card -->
+            <div class="glass-card rounded-3xl p-4 bg-white/5 border border-white/10 relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl"></div>
+                <span class="text-xs font-semibold text-indigo-400 uppercase tracking-widest block mb-2 font-orbitron">Theme</span>
+                <p class="text-xs text-slate-300 italic leading-relaxed">"Identity Through Time. Faces alter inside chronological dimensions; Aegis measures structural invariants."</p>
+                <div class="mt-4 flex items-center justify-between text-[10px] text-slate-500">
+                    <span>COGNITIVE CORE</span>
+                    <span class="text-emerald-400 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="pt-6 border-t border-white/10 flex flex-col gap-1 text-[11px] text-slate-500">
+            <span>&copy; 2026 Aegis Intelligence Systems</span>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-6 lg:p-8 flex flex-col gap-6 lg:gap-8 overflow-y-auto lg:h-screen">
+        
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-extrabold tracking-tight text-white font-orbitron">VERIFICATION REPORT</h2>
+                <p class="text-slate-400 text-sm mt-1">Biometric Scanner Outputs & Identity Similarity Metrics</p>
+            </div>
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-3">
+                <button id="diagnostics-btn" class="px-4 py-2 text-xs font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all duration-300">
+                    Run Diagnostics
+                </button>
+                <a href="/" class="px-4 py-2 text-xs font-bold text-slate-900 bg-gradient-to-r from-indigo-500 to-cyan-500 hover:scale-105 rounded-2xl transition-all duration-300 font-orbitron block text-center">
+                    Scan Another Subject
+                </a>
+            </div>
+        </header>
+
+        <!-- Twin Image Preview cards -->
+        <section class="grid grid-cols-1 lg:grid-cols-[1fr_80px_1fr] items-center gap-6">
+            
+            <!-- Subject 1 Panel -->
+            <div class="flex flex-col gap-3">
+                <div class="flex items-center justify-between px-2 text-xs font-semibold text-slate-400">
+                    <span>SOURCE SCANNER #01</span>
+                    <span class="text-emerald-400 font-semibold">SCANNED</span>
+                </div>
+                
+                <div class="glass-card rounded-3xl relative aspect-[4/3] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
+                    <img src="static/uploads/subject_1.png" class="absolute inset-0 w-full h-full object-cover rounded-2xl" alt="Subject 1 Preview">
+                    <div id="overlay-container-1" class="absolute inset-0 pointer-events-none"></div>
+                </div>
+            </div>
+
+            <!-- Animated Biometric Connection Bridge -->
+            <div class="flex lg:flex-col items-center justify-center gap-3 py-4 lg:py-0 relative h-full">
+                <div class="hidden lg:block w-[1px] h-20 bg-gradient-to-b from-cyan-500/20 to-transparent"></div>
+                <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center relative overflow-hidden bg-cyan-400 text-slate-950 glow-cyan">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <div class="hidden lg:block w-[1px] h-20 bg-gradient-to-b from-transparent to-indigo-500/20"></div>
+                <div class="absolute w-full h-[2px] left-0 hidden lg:block -translate-y-12 animate-line-flow z-10"></div>
+            </div>
+
+            <!-- Subject 2 Panel -->
+            <div class="flex flex-col gap-3">
+                <div class="flex items-center justify-between px-2 text-xs font-semibold text-slate-400">
+                    <span>TARGET SCANNER #02</span>
+                    <span class="text-emerald-400 font-semibold">SCANNED</span>
+                </div>
+                
+                <div class="glass-card rounded-3xl relative aspect-[4/3] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
+                    <img src="static/uploads/subject_2.png" class="absolute inset-0 w-full h-full object-cover rounded-2xl" alt="Subject 2 Preview">
+                    <div id="overlay-container-2" class="absolute inset-0 pointer-events-none"></div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Verification Result & Legend Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
+            
+            <!-- Result Panel -->
+            <div class="glass-card rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between" id="result-card">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                
+                <h3 class="text-xs font-bold text-slate-400 tracking-widest uppercase mb-4 font-orbitron">Biometric Verification Summary</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-6 items-center">
+                    <!-- Circular Meter -->
+                    <div class="flex justify-center items-center relative w-40 h-40 mx-auto" id="result-score-block">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="6" />
+                            <circle cx="50" cy="50" r="42" fill="none" stroke="url(#cyanIndigoGradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" id="circular-meter-fill" class="circular-meter-path" />
+                            <defs>
+                                <linearGradient id="cyanIndigoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#22d3ee" />
+                                    <stop offset="100%" stop-color="#6366f1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-3xl font-extrabold font-orbitron text-white text-glow-cyan" id="result-percentage">0.0%</span>
+                            <span class="text-[9px] text-slate-400 tracking-wider uppercase font-bold mt-1">Similarity</span>
+                        </div>
+                    </div>
+
+                    <!-- Numerical Metadata Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-card bg-white/2 rounded-3xl p-4 border border-white/10">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Decision Result</span>
+                            <span class="text-lg font-bold font-orbitron block text-slate-300 transition-colors duration-300" id="result-label">---</span>
+                        </div>
+                        <div class="glass-card bg-white/2 rounded-3xl p-4 border border-white/10">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Cosine Distance</span>
+                            <span class="text-lg font-bold font-orbitron block text-slate-300" id="result-distance">0.000</span>
+                        </div>
+                        <div class="glass-card bg-white/2 rounded-3xl p-4 border border-white/10">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Validation Probability</span>
+                            <span class="text-lg font-bold font-orbitron block text-slate-300" id="result-confidence">0.0%</span>
+                        </div>
+                        <div class="glass-card bg-white/2 rounded-3xl p-4 border border-white/10">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Execution Latency</span>
+                            <span class="text-lg font-bold font-orbitron block text-slate-300" id="result-latency">0 ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-500 font-orbitron">
+                    <span id="result-timestamp">---</span>
+                    <span class="font-semibold text-[10px]" id="result-sys-status">---</span>
+                </div>
+            </div>
+
+            <!-- Legend Card -->
+            <div class="glass-card rounded-3xl p-6 border border-white/10 relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl"></div>
+                <h3 class="text-xs font-bold text-slate-400 tracking-widest uppercase mb-4 font-orbitron">Verification Thresholds</h3>
+                
+                <div class="flex flex-col gap-3 text-xs">
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-red-500/5 border border-red-500/10">
+                        <span class="text-red-400 font-semibold">Tidak mirip sama sekali</span>
+                        <span class="font-orbitron text-red-300">0.00 – 0.30</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-amber-500/5 border border-amber-500/10">
+                        <span class="text-amber-400 font-semibold">Tidak mirip</span>
+                        <span class="font-orbitron text-amber-300">0.31 – 0.55</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10">
+                        <span class="text-cyan-400 font-semibold">Mirip</span>
+                        <span class="font-orbitron text-cyan-300">0.56 – 0.75</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                        <span class="text-emerald-400 font-semibold">Mirip sekali</span>
+                        <span class="font-orbitron text-emerald-300">0.76 – 1.00</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Bottom Analytics -->
+        <section class="flex flex-col gap-3">
+            <h3 class="text-xs font-bold text-slate-400 tracking-widest uppercase px-1 font-orbitron">Biometric Engine Analytics</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <!-- Card 1: Similarity Distribution -->
+                <div class="glass-card rounded-3xl p-4 border border-white/10 flex flex-col justify-between h-48 relative overflow-hidden bg-white/2">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Similarity Distribution</span>
+                    <div class="flex-grow w-full relative mt-2">
+                        <svg class="w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="chartGrad1" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M 0 50 Q 20 40 40 10 T 80 40 T 100 50 Z" fill="url(#chartGrad1)" />
+                            <path d="M 0 50 Q 20 40 40 10 T 80 40 T 100 50" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="150" stroke-dashoffset="150" id="path-dist" />
+                            <line x1="0" y1="49" x2="100" y2="49" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                        </svg>
+                    </div>
+                    <div class="flex justify-between items-center text-[9px] text-slate-500 mt-2">
+                        <span>LFW DATASET</span>
+                        <span>MEAN: 0.824</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Embedding Distance -->
+                <div class="glass-card rounded-3xl p-4 border border-white/10 flex flex-col justify-between h-48 relative overflow-hidden bg-white/2">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Embedding Distance</span>
+                    <div class="flex-grow w-full relative mt-2 flex items-end justify-between gap-1">
+                        <div class="w-full bg-indigo-500/10 rounded-t border-t border-indigo-500/20" style="height: 10%"></div>
+                        <div class="w-full bg-indigo-500/15 rounded-t border-t border-indigo-500/30" style="height: 30%"></div>
+                        <div class="w-full bg-indigo-500/20 rounded-t border-t border-indigo-500/40" style="height: 55%"></div>
+                        <div class="w-full bg-indigo-500/40 rounded-t border-t border-indigo-500/60 glow-indigo" style="height: 85%"></div>
+                        <div class="w-full bg-indigo-500/30 rounded-t border-t border-indigo-500/50" style="height: 60%"></div>
+                        <div class="w-full bg-indigo-500/15 rounded-t border-t border-indigo-500/30" style="height: 25%"></div>
+                        <div class="w-full bg-indigo-500/5 rounded-t border-t border-indigo-500/10" style="height: 5%"></div>
+                    </div>
+                    <div class="flex justify-between items-center text-[9px] text-slate-500 mt-2">
+                        <span>COSINE SCALE</span>
+                        <span>STD: 0.042</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: ROC Curve -->
+                <div class="glass-card rounded-3xl p-4 border border-white/10 flex flex-col justify-between h-48 relative overflow-hidden bg-white/2">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">ROC Curve</span>
+                    <div class="flex-grow w-full relative mt-2">
+                        <svg class="w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
+                            <line x1="0" y1="50" x2="100" y2="0" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2" stroke-width="0.5" />
+                            <path d="M 0 50 C 10 10 50 1 100 0" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="150" stroke-dashoffset="150" id="path-roc" />
+                            <line x1="0" y1="49" x2="100" y2="49" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                            <line x1="1" y1="0" x2="1" y2="50" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                        </svg>
+                    </div>
+                    <div class="flex justify-between items-center text-[9px] text-slate-500 mt-2">
+                        <span>TPR vs FPR</span>
+                        <span>AUC: 0.9982</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Age Gap Analysis Graph -->
+                <div class="glass-card rounded-3xl p-4 border border-white/10 flex flex-col justify-between h-48 relative overflow-hidden bg-white/2">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Age Gap Accuracy</span>
+                    <div class="flex-grow w-full relative mt-2">
+                        <svg class="w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
+                            <path d="M 0 10 L 20 12 L 40 18 L 60 25 L 80 32 L 100 45" fill="none" stroke="#22d3ee" stroke-dasharray="100" stroke-dashoffset="100" id="path-age" stroke-width="1.5" />
+                            <circle cx="20" cy="12" r="1.5" fill="#22d3ee" opacity="0" class="age-dot" />
+                            <circle cx="40" cy="18" r="1.5" fill="#6366f1" opacity="0" class="age-dot" />
+                            <circle cx="60" cy="25" r="1.5" fill="#22d3ee" opacity="0" class="age-dot" />
+                            <circle cx="80" cy="32" r="1.5" fill="#6366f1" opacity="0" class="age-dot" />
+                            <line x1="0" y1="49" x2="100" y2="49" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                        </svg>
+                    </div>
+                    <div class="flex justify-between items-center text-[9px] text-slate-500 mt-2">
+                        <span>X: GAP (0-30 YRS)</span>
+                        <span>ACCURACY DECAY</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Dialog / Diagnostics Panel -->
+    <div id="diagnostics-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="w-full max-w-lg glass-card border border-white/10 rounded-3xl p-6 shadow-2xl relative bg-slate-900/90">
+            <h4 class="text-sm font-bold text-white font-orbitron tracking-widest mb-4">SYSTEM DIAGNOSTICS</h4>
+            <div class="bg-black/40 rounded-2xl p-4 font-mono text-[10px] text-slate-400 h-64 overflow-y-auto flex flex-col gap-2" id="diagnostics-log">
+                <p class="text-cyan-400">> AEGIS AI Core Initialized.</p>
+                <p>> Neural architecture: ResNet50-ArcFace</p>
+                <p>> Device context: GPU/CUDA enabled</p>
+                <p>> Ready for biometric scanning.</p>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button id="close-diagnostics-btn" class="px-4 py-2 text-xs font-bold bg-white/5 border border-white/10 hover:bg-white/10 rounded-2xl transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modular Script -->
+    <script type="module" src="static/js/scanner.js"></script>
+
+</body>
+</html>

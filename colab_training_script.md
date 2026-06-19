@@ -12,6 +12,7 @@ from PIL import Image
 import math
 import torch.nn.functional as F
 import os
+import zipfile
 from tqdm import tqdm
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -20,7 +21,6 @@ print(f"Using device: {device}")
 BATCH_SIZE = 64
 EPOCHS = 10
 EMBEDDING_SIZE = 512
-NUM_CLASSES = 5749 
 
 # 3. Define Models (ResNet50 Backbone + ArcFace Head)
 class ResNet50Backbone(nn.Module):
@@ -65,10 +65,7 @@ class ArcFace(nn.Module):
         output *= self.s
         return output
 
-# 4. Dataset Loader
-from torchvision.datasets import ImageFolder
-import zipfile
-
+# 4. Dataset Loader (Custom Auto-Loader for Flat and Nested Folders)
 zip_paths = ['LFW - Dataset.zip', 'CelebA-20260619T160407Z-3-002.zip']
 extracted_dir = 'dataset_extracted'
 
@@ -84,6 +81,48 @@ for zip_path in zip_paths:
     else:
         print(f"Warning: {zip_path} not found.")
 
+class UnifiedFaceDataset(Dataset):
+    def __init__(self, root_dir, transform=None):
+        self.root_dir = root_dir
+        self.transform = transform
+        self.image_paths = []
+        self.labels = []
+        
+        # Build class mapping dynamically based on parent folder names
+        self.classes = set()
+        valid_exts = ('.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', '.webp')
+        
+        print("Scanning dataset directories to build class mapping...")
+        for dirpath, _, filenames in os.walk(root_dir):
+            for f in filenames:
+                if f.lower().endswith(valid_exts):
+                    # The class name is the immediate parent folder name
+                    class_name = os.path.basename(dirpath)
+                    self.classes.add(class_name)
+                    self.image_paths.append(os.path.join(dirpath, f))
+                    
+        self.classes = sorted(list(self.classes))
+        self.class_to_idx = {cls_name: i for i, cls_name in enumerate(self.classes)}
+        
+        for path in self.image_paths:
+            class_name = os.path.basename(os.path.dirname(path))
+            self.labels.append(self.class_to_idx[class_name])
+            
+        print(f"Found {len(self.image_paths)} images across {len(self.classes)} unique identities/folders.")
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        img_path = self.image_paths[idx]
+        image = Image.open(img_path).convert('RGB')
+        label = self.labels[idx]
+        
+        if self.transform:
+            image = self.transform(image)
+            
+        return image, label
+
 transform = transforms.Compose([
     transforms.Resize((112, 112)),
     transforms.RandomHorizontalFlip(),
@@ -91,10 +130,10 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
 ])
 
-dataset = ImageFolder(root=extracted_dir, transform=transform)
+dataset = UnifiedFaceDataset(root_dir=extracted_dir, transform=transform)
 
 NUM_CLASSES = len(dataset.classes)
-print(f"Number of classes found: {NUM_CLASSES}")
+print(f"Total Model Output Classes (Identities): {NUM_CLASSES}")
 
 dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 

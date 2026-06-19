@@ -1,6 +1,39 @@
-DESIGN.md
-ARCHITECTURE.md
+# Virtual Environments
+.venv/
+venv/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Model Weights & Large Files
+*.pth
+*.pt
+*.onnx
+*.zip
+*.tar.gz
+*.rar
+dataset_extracted/
 CelebA-20260619T160407Z-3-002.zip
 LFW - Dataset.zip
 
-.venv/
+# App specific static uploads/outputs
+app/static/uploads/
+app/static/outputs/
+
+# IDEs & Editor caches
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Documentation / Markdown
+DESIGN.md
+ARCHITECTURE.md
