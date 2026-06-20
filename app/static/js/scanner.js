@@ -167,8 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
         setupDragDrop(drop1, preview1, placeholder1, 1, (f) => file1Data = f);
         setupDragDrop(drop2, preview2, placeholder2, 2, (f) => file2Data = f);
 
-        drop1.addEventListener('click', () => file1.click());
-        drop2.addEventListener('click', () => file2.click());
+        const btnUpload1 = document.getElementById('btn-upload-1');
+        const btnUpload2 = document.getElementById('btn-upload-2');
+        if (btnUpload1) btnUpload1.addEventListener('click', (e) => { e.stopPropagation(); file1.click(); });
+        if (btnUpload2) btnUpload2.addEventListener('click', (e) => { e.stopPropagation(); file2.click(); });
 
         file1.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
@@ -182,7 +184,87 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // CAMERA LOGIC
+        let stream1 = null;
+        let stream2 = null;
+
+        const startCamera = async (idx) => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+                const video = document.getElementById(`video-${idx}`);
+                const cameraUI = document.getElementById(`camera-ui-${idx}`);
+                if (video && cameraUI) {
+                    video.srcObject = stream;
+                    cameraUI.classList.remove('hidden');
+                    cameraUI.classList.add('flex');
+                    if (idx === 1) stream1 = stream;
+                    if (idx === 2) stream2 = stream;
+                }
+            } catch (err) {
+                console.error("Error accessing camera: ", err);
+                alert("Cannot access camera. Please check permissions.");
+            }
+        };
+
+        const stopCamera = (idx) => {
+            const stream = idx === 1 ? stream1 : stream2;
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                if (idx === 1) stream1 = null;
+                if (idx === 2) stream2 = null;
+            }
+            const cameraUI = document.getElementById(`camera-ui-${idx}`);
+            if (cameraUI) {
+                cameraUI.classList.add('hidden');
+                cameraUI.classList.remove('flex');
+            }
+        };
+
+        const capturePhoto = (idx) => {
+            const video = document.getElementById(`video-${idx}`);
+            const canvas = document.getElementById(`canvas-${idx}`);
+            if (!video || !canvas) return;
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw mirrored image if facingMode is user
+            ctx.translate(canvas.width, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+                const file = new File([blob], `capture_${idx}.jpg`, { type: 'image/jpeg' });
+                const previewEl = idx === 1 ? preview1 : preview2;
+                const placeholderEl = idx === 1 ? placeholder1 : placeholder2;
+                
+                handleFileChange(file, previewEl, placeholderEl, idx, (f) => {
+                    if (idx === 1) file1Data = f;
+                    if (idx === 2) file2Data = f;
+                });
+                stopCamera(idx);
+            }, 'image/jpeg', 0.95);
+        };
+
+        const btnCamera1 = document.getElementById('btn-camera-1');
+        const btnCamera2 = document.getElementById('btn-camera-2');
+        const btnCancelCam1 = document.getElementById('btn-cancel-cam-1');
+        const btnCancelCam2 = document.getElementById('btn-cancel-cam-2');
+        const btnCapture1 = document.getElementById('btn-capture-1');
+        const btnCapture2 = document.getElementById('btn-capture-2');
+
+        if (btnCamera1) btnCamera1.addEventListener('click', (e) => { e.stopPropagation(); startCamera(1); });
+        if (btnCamera2) btnCamera2.addEventListener('click', (e) => { e.stopPropagation(); startCamera(2); });
+        if (btnCancelCam1) btnCancelCam1.addEventListener('click', (e) => { e.stopPropagation(); stopCamera(1); });
+        if (btnCancelCam2) btnCancelCam2.addEventListener('click', (e) => { e.stopPropagation(); stopCamera(2); });
+        if (btnCapture1) btnCapture1.addEventListener('click', (e) => { e.stopPropagation(); capturePhoto(1); });
+        if (btnCapture2) btnCapture2.addEventListener('click', (e) => { e.stopPropagation(); capturePhoto(2); });
+
         const resetSystem = () => {
+            stopCamera(1);
+            stopCamera(2);
             file1Data = null;
             file2Data = null;
             file1.value = '';
