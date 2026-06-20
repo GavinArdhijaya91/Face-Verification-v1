@@ -144,14 +144,14 @@ document.addEventListener('DOMContentLoaded', () => {
         mesh.style.height = `${faceData.box.height}%`;
         container.appendChild(mesh);
 
-        faceData.landmarks.forEach(pt => {
-            const dot = document.createElement('div');
-            dot.className = 'landmark-dot';
-            dot.style.left = `${pt.x}%`;
-            dot.style.top = `${pt.y}%`;
-            dot.setAttribute('data-label', pt.label);
-            container.appendChild(dot);
-        });
+        // faceData.landmarks.forEach(pt => {
+        //     const dot = document.createElement('div');
+        //     dot.className = 'landmark-dot';
+        //     dot.style.left = `${pt.x}%`;
+        //     dot.style.top = `${pt.y}%`;
+        //     dot.setAttribute('data-label', pt.label);
+        //     container.appendChild(dot);
+        // });
     };
 
     // PAGE 1: UPLOAD PAGE LOGIC
