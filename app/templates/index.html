@@ -13,6 +13,14 @@
     <link rel="stylesheet" href="static/css/globals.css">
     <link rel="stylesheet" href="static/css/animations.css">
     <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            alert(`JS Error: ${message}\nLine: ${lineno}\nCol: ${colno}`);
+            return false;
+        };
+        window.addEventListener('unhandledrejection', function(event) {
+            alert(`Promise Rejection: ${event.reason}`);
+        });
+
         tailwind.config = {
             theme: {
                 extend: {

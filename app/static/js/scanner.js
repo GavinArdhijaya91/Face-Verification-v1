@@ -194,7 +194,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert("Camera access is not supported. Please ensure you are using HTTPS or a modern browser.");
                     return;
                 }
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+                
+                let stream;
+                try {
+                    // Try to get front-facing camera first
+                    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+                } catch (err) {
+                    console.warn("Front camera not available, falling back to any camera", err);
+                    // Fallback to any camera
+                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                }
+
                 const video = document.getElementById(`video-${idx}`);
                 const cameraUI = document.getElementById(`camera-ui-${idx}`);
                 if (video && cameraUI) {
@@ -206,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (err) {
                 console.error("Error accessing camera: ", err);
-                alert("Cannot access camera. Please check permissions or ensure you are on HTTPS.");
+                alert(`Cannot access camera. Error: ${err.message}. Please check permissions or ensure you are on HTTPS.`);
             }
         };
 
