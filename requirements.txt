@@ -6,3 +6,4 @@ opencv-python
 python-multipart
 jinja2
 numpy
+facenet-pytorch
