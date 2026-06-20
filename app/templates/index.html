@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biometric Face Verification</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/geist-sans.css" rel="stylesheet">
     <link rel="stylesheet" href="static/css/globals.css">
     <link rel="stylesheet" href="static/css/animations.css">
     <script>
@@ -13,230 +17,546 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        orbitron: ['Orbitron', 'sans-serif'],
+                        'satoshi': ['Satoshi', 'sans-serif'],
+                        'geist': ['Geist', 'sans-serif'],
+                        'plus-jakarta': ['"Plus Jakarta Sans"', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-[#F8FAFC] text-[#0F172A] font-sans min-h-screen flex flex-col lg:flex-row">
 
-    <!-- Left Sidebar -->
-    <aside class="w-full lg:w-[280px] bg-[#0F172A] border-b lg:border-b-0 lg:border-r border-[#1E293B] flex flex-col justify-between shrink-0 p-6 lg:h-screen lg:sticky lg:top-0 z-40">
-        <div class="flex flex-col gap-8">
-            <!-- Brand Logo -->
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center  relative overflow-hidden group">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                    </svg>
+<body class="bg-[#F8FAFC] bg-texture text-[#0F172A] font-plus-jakarta min-h-screen flex flex-col lg:flex-row">
+
+    <!-- Mobile -->
+    <div class="mobile-topbar flex lg:hidden items-center justify-between px-4 h-14 fixed top-0 left-0 right-0 z-50">
+        <button id="drawer-toggle" class="text-white/70 hover:text-white p-1.5 -ml-1.5 transition-colors"
+            aria-label="Open menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+        <div class="flex items-center gap-2">
+            <div class="biometric-logo !w-6 !h-6 !rounded-md flex-shrink-0">
+                <svg width="14" height="14" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="13" cy="13" r="11" stroke="white" stroke-width="0.8" opacity="0.3" fill="none" />
+                    <path d="M7 18 C7 10 10 6 13 6 C16 6 19 10 19 18" stroke="white" stroke-width="1" fill="none"
+                        opacity="0.9" />
+                    <circle cx="15.5" cy="10.5" r="0.8" fill="white" opacity="0.7" />
+                </svg>
+            </div>
+            <div class="brand-title text-xs leading-tight">BY GAVIN</div>
+        </div>
+    </div>
+
+    <!-- Mobile Drawer Overlay -->
+    <div id="drawer-overlay" class="drawer-overlay lg:hidden"></div>
+
+    <!-- Mobile Drawer Panel -->
+    <div id="mobile-drawer" class="mobile-drawer lg:hidden">
+        <div class="flex flex-col gap-5 flex-1">
+
+            <!-- Drawer Brand & Close Button -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="biometric-logo">
+                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="13" cy="13" r="11" stroke="white" stroke-width="0.8" opacity="0.3"
+                                fill="none" />
+                            <path d="M7 18 C7 10 10 6 13 6 C16 6 19 10 19 18" stroke="white" stroke-width="1"
+                                fill="none" opacity="0.9" />
+                            <circle cx="15.5" cy="10.5" r="0.8" fill="white" opacity="0.7" />
+                            <path d="M10 14 Q12 13 14 14 Q16 15 17 16" stroke="#60A5FA" stroke-width="0.7" fill="none"
+                                opacity="0.5" />
+                            <path d="M11 15.5 Q13 14.5 15 15.5" stroke="#60A5FA" stroke-width="0.5" fill="none"
+                                opacity="0.4" />
+                            <path d="M3 3 L6 3 L6 3.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6" fill="none" />
+                            <path d="M23 3 L20 3 L20 3.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6"
+                                fill="none" />
+                            <path d="M3 23 L6 23 L6 22.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6"
+                                fill="none" />
+                            <path d="M23 23 L20 23 L20 22.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6"
+                                fill="none" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="brand-title text-base">BY GAVIN</h1>
+                        <p class="brand-subtitle">Biometric Lab v1.0</p>
+                    </div>
                 </div>
+                <button id="drawer-close" class="text-slate-400 hover:text-white p-2 -mr-2 transition-colors"
+                    aria-label="Close menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Drawer Navigation -->
+            <nav class="flex flex-col gap-4">
                 <div>
-                    <h1 class="font-bold tracking-wider text-white">BY GAVIN</h1>
-                    <p class="text-[10px] text-slate-400 tracking-widest uppercase font-semibold">Biometric Lab v1.0</p>
+                    <p class="nav-section-title text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2">
+                        System Core</p>
+                    <div class="flex flex-col gap-1">
+                        <a href="/"
+                            class="nav-item nav-item-active flex items-center gap-3 px-4 py-3 rounded-xl sidebar-card text-sm text-blue-500 drawer-nav-link">
+                            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm0 12h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                            </svg>
+                            Face Verification
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Drawer Sync Status -->
+            <div class="sync-card glass-card">
+                <p class="sync-card-title">Neural Sync Status</p>
+                <div class="flex flex-col gap-1">
+                    <div class="sync-row">
+                        <span class="sync-row-label">Face Engine</span>
+                        <span class="sync-row-value">
+                            <span class="sync-dot sync-dot-green"></span>
+                            ONLINE
+                        </span>
+                    </div>
+                    <div class="sync-row">
+                        <span class="sync-row-label">Embedding Model</span>
+                        <span class="sync-row-value" style="font-size:10px;color:rgba(255,255,255,0.7);">ArcFace
+                            Active</span>
+                    </div>
+                    <div class="sync-row">
+                        <span class="sync-row-label">Verification Mode</span>
+                        <span class="sync-row-value" style="font-size:10px;color:rgba(255,255,255,0.7);">Pairwise</span>
+                    </div>
+                    <div class="sync-row">
+                        <span class="sync-row-label">Latency</span>
+                        <span class="sync-row-value">
+                            <span class="sync-dot sync-dot-blue"></span>
+                            &lt; 500ms
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Navigation -->
-            <nav class="flex flex-col gap-2">
-                <p class="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2">Systems</p>
-                <a href="/" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-blue-500 text-sm font-semibold transition-all duration-300">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1.008 1.008 0 001-1V5a1.008 1.008 0 00-1-1H5a1.008 1.008 0 00-1 1v2a1.008 1.008 0 001 1zm0 12h2a1.008 1.008 0 001-1v-2a1.008 1.008 0 00-1-1H5a1.008 1.008 0 00-1 1v2a1.008 1.008 0 001 1zm12 0h2a1.008 1.008 0 001-1v-2a1.008 1.008 0 00-1-1h-2a1.008 1.008 0 00-1 1v2a1.008 1.008 0 001 1z"></path>
-                    </svg>
-                    Face Verification
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border border-transparent hover:bg-white/5 text-slate-400 hover:text-white text-sm font-semibold transition-all duration-300">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                    Database Metrics
-                </a>
-            </nav>
+            <!-- Drawer Radar -->
+            <div class="biometric-radar glass-card">
+                <svg class="radar-svg" width="44" height="44" viewBox="0 0 48 48" fill="none">
+                    <circle cx="24" cy="24" r="22" stroke="rgba(255,255,255,0.06)" stroke-width="0.5" />
+                    <circle cx="24" cy="24" r="15" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" />
+                    <circle cx="24" cy="24" r="8" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" />
+                    <line x1="24" y1="24" x2="44" y2="6" stroke="rgba(96,165,250,0.15)" stroke-width="1" />
+                    <circle cx="24" cy="24" r="2" fill="rgba(96,165,250,0.2)" />
+                </svg>
+                <div class="radar-integrity">98%</div>
+                <div class="radar-integrity-sub">System Integrity</div>
+            </div>
+        </div>
 
-            <!-- Quote Card -->
-            <div class="glass-card rounded-xl p-4 bg-white/5 border border-white/10 relative overflow-hidden">
-                <div class="absolute -top-12 -right-12 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest block mb-2">Theme</span>
-                <p class="text-xs text-slate-300 italic leading-relaxed">"Identity Through Time. Faces alter inside chronological dimensions; Aegis measures structural invariants."</p>
-                <div class="mt-4 flex items-center justify-between text-[10px] text-slate-500">
-                    <span>COGNITIVE CORE</span>
-                    <span class="text-green-500 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE
-                    </span>
+        <!-- Drawer Bottom -->
+        <div class="flex-shrink-0 flex flex-col gap-4 pt-4">
+            <div class="security-card">
+                <div class="security-card-header">
+                    <span class="security-card-title">Security</span>
+                    <span class="security-lock"></span>
+                </div>
+                <p class="security-card-text">End-to-end encrypted &bull; All face operations logged</p>
+            </div>
+            <div class="sidebar-footer">
+                <span class="sidebar-footer-line1">&copy; 2026 Gavin</span>
+                <span class="sidebar-footer-line2">Biometric Intelligence System</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left Sidebar - Biometric Lab Panel (desktop only) -->
+    <aside
+        class="sidebar-lab hidden lg:flex w-full lg:w-[280px] flex-col shrink-0 lg:h-screen lg:sticky lg:top-0 z-40 border-r border-[#1E293B]">
+
+        <!-- Scrollable top section -->
+        <div class="flex-1 min-h-0 overflow-y-auto px-6 pt-6 pb-2 custom-scrollbar">
+            <div class="flex flex-col gap-5">
+
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="biometric-logo">
+                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="13" cy="13" r="11" stroke="white" stroke-width="0.8" opacity="0.3"
+                                fill="none" />
+                            <path d="M7 18 C7 10 10 6 13 6 C16 6 19 10 19 18" stroke="white" stroke-width="1"
+                                fill="none" opacity="0.9" />
+                            <circle cx="15.5" cy="10.5" r="0.8" fill="white" opacity="0.7" />
+                            <path d="M10 14 Q12 13 14 14 Q16 15 17 16" stroke="#60A5FA" stroke-width="0.7" fill="none"
+                                opacity="0.5" />
+                            <path d="M11 15.5 Q13 14.5 15 15.5" stroke="#60A5FA" stroke-width="0.5" fill="none"
+                                opacity="0.4" />
+                            <path d="M3 3 L6 3 L6 3.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6" fill="none" />
+                            <path d="M23 3 L20 3 L20 3.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6"
+                                fill="none" />
+                            <path d="M3 23 L6 23 L6 22.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6"
+                                fill="none" />
+                            <path d="M23 23 L20 23 L20 22.5" stroke="rgba(96,165,250,0.3)" stroke-width="0.6"
+                                fill="none" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="brand-title text-base">BY GAVIN</h1>
+                        <p class="brand-subtitle">Biometric Lab v1.0</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <!-- Navigation -->
+                <nav class="flex flex-col gap-4">
+                    <div>
+                        <p class="nav-section-title text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2">
+                            System Core</p>
+                        <div class="flex flex-col gap-1">
+                            <a href="/"
+                                class="nav-item nav-item-active flex items-center gap-3 px-4 py-3 rounded-xl sidebar-card text-sm text-blue-500">
+                                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm0 12h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                </svg>
+                                Face Verification
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Neural Sync Status -->
+                <div class="sync-card glass-card">
+                    <p class="sync-card-title">Neural Sync Status</p>
+                    <div class="flex flex-col gap-1">
+                        <div class="sync-row">
+                            <span class="sync-row-label">Face Engine</span>
+                            <span class="sync-row-value">
+                                <span class="sync-dot sync-dot-green"></span>
+                                ONLINE
+                            </span>
+                        </div>
+                        <div class="sync-row">
+                            <span class="sync-row-label">Embedding Model</span>
+                            <span class="sync-row-value" style="font-size:10px;color:rgba(255,255,255,0.7);">ArcFace
+                                Active</span>
+                        </div>
+                        <div class="sync-row">
+                            <span class="sync-row-label">Verification Mode</span>
+                            <span class="sync-row-value"
+                                style="font-size:10px;color:rgba(255,255,255,0.7);">Pairwise</span>
+                        </div>
+                        <div class="sync-row">
+                            <span class="sync-row-label">Latency</span>
+                            <span class="sync-row-value">
+                                <span class="sync-dot sync-dot-blue"></span>
+                                &lt; 500ms
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biometric Radar -->
+                <div class="biometric-radar glass-card">
+                    <svg class="radar-svg" width="44" height="44" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="rgba(255,255,255,0.06)" stroke-width="0.5" />
+                        <circle cx="24" cy="24" r="15" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" />
+                        <circle cx="24" cy="24" r="8" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" />
+                        <line x1="24" y1="24" x2="44" y2="6" stroke="rgba(96,165,250,0.15)" stroke-width="1" />
+                        <circle cx="24" cy="24" r="2" fill="rgba(96,165,250,0.2)" />
+                    </svg>
+                    <div class="radar-integrity">98%</div>
+                    <div class="radar-integrity-sub">System Integrity</div>
                 </div>
             </div>
         </div>
 
-        <!-- Sidebar Footer -->
-        <div class="pt-6 border-t border-white/10 flex flex-col gap-1 text-[11px] text-slate-500">
-            <span>&copy; 2026 Gavin</span>
+        <!-- Bottom section (sticky) -->
+        <div class="flex-shrink-0 flex flex-col gap-4 px-6 pb-6">
+
+            <!-- Security Card -->
+            <div class="security-card">
+                <div class="security-card-header">
+                    <span class="security-card-title">Security</span>
+                    <span class="security-lock"></span>
+                </div>
+                <p class="security-card-text">End-to-end encrypted &bull; All face operations logged</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="sidebar-footer">
+                <span class="sidebar-footer-line1">&copy; 2026 Gavin</span>
+                <span class="sidebar-footer-line2">Biometric Intelligence System</span>
+            </div>
         </div>
     </aside>
 
+    <!-- Background Orbs - small fast particles -->
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="bg-orb bg-orb-4"></div>
+    <div class="bg-orb bg-orb-5"></div>
+    <div class="bg-orb bg-orb-6"></div>
+    <div class="bg-orb bg-orb-7"></div>
+    <div class="bg-orb bg-orb-8"></div>
+
     <!-- Main Content Area -->
-    <main class="flex-grow p-6 lg:p-8 flex flex-col gap-6 lg:gap-8 overflow-y-auto lg:h-screen">
-        
+    <main
+        class="flex-grow p-6 lg:p-8 flex flex-col gap-6 lg:gap-8 overflow-y-auto lg:h-screen pt-20 lg:pt-6 pb-6 lg:pb-8">
+
         <!-- Header -->
         <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-                <h2 class="text-3xl font-extrabold tracking-tight text-[#0F172A]">FACE VERIFICATION</h2>
-                <p class="text-[#64748B] text-sm mt-1">AI-Powered Face Similarity Analysis & Identity Matching</p>
+                <h2 class="font-satoshi text-3xl font-extrabold tracking-tight text-[#0F172A]">FACE VERIFICATION</h2>
+                <p class="font-plus-jakarta text-[#64748B] text-sm mt-1">AI-Powered Face Similarity Analysis & Identity
+                    Matching</p>
             </div>
             <!-- Top Action Buttons -->
             <div class="flex items-center gap-3">
-                <button id="import-samples-btn" class="px-4 py-2 text-xs font-bold text-[#334155] hover:text-[#0F172A] bg-[#F1F5F9] hover:bg-white/10 border border-[#E2E8F0] rounded-2xl transition-all duration-300">
+                <button id="import-samples-btn" class="btn-secondary px-4 py-2 font-satoshi">
                     Import Samples
                 </button>
-                <button id="diagnostics-btn" class="px-4 py-2 text-xs font-bold text-[#334155] hover:text-[#0F172A] bg-[#F1F5F9] hover:bg-white/10 border border-[#E2E8F0] rounded-2xl transition-all duration-300">
+                <button id="diagnostics-btn" class="btn-secondary px-4 py-2 font-satoshi">
                     Run Diagnostics
                 </button>
-                <button id="reset-btn" class="px-4 py-2 text-xs font-bold text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 rounded-2xl transition-all duration-300">
+                <button id="reset-btn" class="btn-danger px-4 py-2 font-satoshi">
                     Reset System
                 </button>
             </div>
         </header>
 
         <!-- Twin Upload Section -->
-        <section class="grid grid-cols-1 lg:grid-cols-[1fr_80px_1fr] items-center gap-6">
-            
-            <!-- Upload Panel 1 -->
-            <div class="flex flex-col gap-3">
-                <div class="flex items-center justify-between px-2 text-xs font-semibold text-[#64748B]">
-                    <span>SOURCE SCANNER #01</span>
-                    <span id="meta-1-status" class="text-slate-500">IDLE</span>
+        <div class="section-container-upload p-6 lg:p-8">
+            <section class="grid grid-cols-1 lg:grid-cols-[1fr_80px_1fr] items-center gap-6">
+
+                <!-- Upload Panel 1 -->
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center justify-between px-2 text-xs font-semibold text-[#64748B]">
+                        <span class="font-plus-jakarta">SOURCE SCANNER 01</span>
+                        <span id="meta-1-status" class="font-geist text-slate-500 font-bold">IDLE</span>
+                    </div>
+
+                    <div id="drop-1"
+                        class="upload-zone relative min-h-[340px] flex flex-col justify-center items-center cursor-pointer overflow-hidden hover:scale-[1.02] transition-all duration-300 group">
+                        <input type="file" id="file-1" class="hidden" accept="image/*">
+                        <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none z-10"
+                            id="scan-line-1"></div>
+
+                        <!-- Placeholder UI -->
+                        <div id="placeholder-1"
+                            class="text-center p-8 flex flex-col items-center w-full justify-center gap-2">
+                            <div
+                                class="upload-icon w-14 h-14 rounded-xl bg-[#F1F5F9] flex items-center justify-center border border-[#E2E8F0] mb-2">
+                                <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                            </div>
+                            <span class="font-plus-jakarta text-sm font-semibold text-[#1E293B]">Load Subject
+                                Image</span>
+                            <span class="font-plus-jakarta text-xs text-slate-500 mt-1">Drag and drop or click to
+                                browse</span>
+                        </div>
+
+                        <!-- Image Preview & Overlay Wrapper -->
+                        <div
+                            class="relative max-w-full flex items-center justify-center pointer-events-none p-2 w-full h-full">
+                            <div
+                                class="face-image-wrapper relative max-w-full max-h-[500px] flex items-center justify-center">
+                                <img id="preview-1"
+                                    class="hidden max-w-full max-h-[500px] rounded-2xl pointer-events-auto"
+                                    alt="Preview 1">
+                                <div class="face-grid-overlay rounded-2xl"></div>
+                                <div class="face-scanline"></div>
+                                <!-- Precision Face Grid Canvas & Mesh Overlay Containers -->
+                                <div id="mesh-container-1" class="absolute inset-0 pointer-events-none hidden"></div>
+                                <div id="overlay-container-1" class="absolute inset-0 pointer-events-none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="metadata-card font-plus-jakarta flex justify-between items-center text-[11px] text-[#64748B]">
+                        <div class="flex flex-col">
+                            <span class="font-plus-jakarta font-semibold text-[#334155] truncate max-w-[150px]"
+                                id="meta-1-name">No File Loaded</span>
+                            <span class="font-plus-jakarta" id="meta-1-dims">Dimensions: ---</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-plus-jakarta" id="meta-1-size">Size: ---</span>
+                            <span class="font-plus-jakarta block text-blue-500" id="meta-1-type">Type: ---</span>
+                        </div>
+                    </div>
                 </div>
-                
-                <div id="drop-1" class="surface-card rounded-xl relative min-h-[300px] flex flex-col justify-center items-center cursor-pointer overflow-hidden border border-[#E2E8F0] hover:border-blue-500/30 hover:scale-[1.02] transition-all duration-300 group">
-                    <input type="file" id="file-1" class="hidden" accept="image/*">
-                    <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none z-10" id="scan-line-1"></div>
-                    
-                    <!-- Placeholder UI -->
-                    <div id="placeholder-1" class="text-center p-6 flex flex-col items-center w-full justify-center">
-                        <div class="w-12 h-12 rounded-xl bg-[#F1F5F9] flex items-center justify-center border border-[#E2E8F0] mb-4 transition-colors">
-                            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+
+                <!-- Animated Biometric Connection Bridge -->
+                <div class="connector-wrapper">
+                    <div class="connector-line"></div>
+
+                    <div class="connector-circle">
+                        <!-- Interactive Pulse Button -->
+                        <button id="verify-btn" disabled
+                            class="btn-primary group relative overflow-hidden w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 disabled:cursor-not-allowed focus:outline-none z-20">
+                            <!-- Chevron Icon -->
+                            <svg class="w-5 h-5 absolute transition-all duration-300 transform group-hover:scale-50 group-hover:opacity-0 group-hover:-translate-y-6"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M9 5l7 7-7 7"></path>
                             </svg>
-                        </div>
-                        <span class="text-sm font-semibold text-[#1E293B]">Load Subject Image</span>
-                        <span class="text-xs text-slate-500 mt-1">Drag and drop or click to browse</span>
-                    </div>
-
-                    <!-- Image Preview & Overlay Wrapper -->
-                    <div class="relative max-w-full flex items-center justify-center pointer-events-none p-2 w-full h-full">
-                        <div class="relative max-w-full max-h-[500px] flex items-center justify-center">
-                            <img id="preview-1" class="hidden max-w-full max-h-[500px] rounded-2xl pointer-events-auto" alt="Preview 1">
-                            <!-- Precision Face Grid Canvas & Mesh Overlay Containers -->
-                            <div id="mesh-container-1" class="absolute inset-0 pointer-events-none hidden"></div>
-                            <div id="overlay-container-1" class="absolute inset-0 pointer-events-none"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Metadata Panel 1 -->
-                <div class="surface-card rounded-2xl p-4 border border-[#E2E8F0] flex justify-between items-center text-[11px] text-[#64748B] bg-[#FFFFFF]">
-                    <div class="flex flex-col">
-                        <span class="font-semibold text-[#334155] truncate max-w-[150px]" id="meta-1-name">No File Loaded</span>
-                        <span id="meta-1-dims">Dimensions: ---</span>
-                    </div>
-                    <div class="text-right">
-                        <span id="meta-1-size">Size: ---</span>
-                        <span class="block text-blue-500" id="meta-1-type">Type: ---</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Animated Biometric Connection Bridge -->
-            <div class="flex lg:flex-col items-center justify-center gap-3 py-4 lg:py-0 relative h-full">
-                <div class="hidden lg:block w-[1px] h-20 bg-gradient-to-b from-cyan-500/20 to-transparent"></div>
-                
-                <div class="w-12 h-12 rounded-full border border-[#E2E8F0] flex items-center justify-center relative overflow-hidden group">
-                    <div class="absolute inset-0 border-2 border-dashed border-[#E2E8F0] rounded-full"></div>
-                    
-                    <!-- Interactive Pulse Button -->
-                    <button id="verify-btn" disabled class="w-8 h-8 rounded-full bg-blue-600 disabled:bg-slate-800 text-[#0F172A] disabled:text-slate-500 flex items-center justify-center transition-all duration-300 disabled:cursor-not-allowed  focus:outline-none  z-20">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                </div>
-                
-                <div class="hidden lg:block w-[1px] h-20 bg-gradient-to-b from-transparent to-indigo-500/20"></div>
-
-                <!-- Absolute Horizontal connection flow path (glowing pulse lines) -->
-                <div class="absolute w-full h-[2px] left-0 hidden lg:block -translate-y-12 animate-line-flow opacity-0 transition-opacity duration-300 z-10" id="pulse-flow-indicator"></div>
-            </div>
-
-            <!-- Upload Panel 2 -->
-            <div class="flex flex-col gap-3">
-                <div class="flex items-center justify-between px-2 text-xs font-semibold text-[#64748B]">
-                    <span>TARGET SCANNER #02</span>
-                    <span id="meta-2-status" class="text-slate-500">IDLE</span>
-                </div>
-                
-                <div id="drop-2" class="surface-card rounded-xl relative min-h-[300px] flex flex-col justify-center items-center cursor-pointer overflow-hidden border border-[#E2E8F0] hover:border-blue-500/30 hover:scale-[1.02] transition-all duration-300 group">
-                    <input type="file" id="file-2" class="hidden" accept="image/*">
-                    <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none z-10" id="scan-line-2"></div>
-                    
-                    <!-- Placeholder UI -->
-                    <div id="placeholder-2" class="text-center p-6 flex flex-col items-center w-full justify-center">
-                        <div class="w-12 h-12 rounded-xl bg-[#F1F5F9] flex items-center justify-center border border-[#E2E8F0] mb-4 transition-colors">
-                            <svg class="w-6 h-6 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            <!-- Verify (Checkmark) Icon -->
+                            <svg class="w-6 h-6 absolute transition-all duration-300 transform scale-50 opacity-0 translate-y-6 group-hover:scale-100 group-hover:opacity-100 group-hover:translate-y-0"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
                             </svg>
-                        </div>
-                        <span class="text-sm font-semibold text-[#1E293B]">Load Subject Image</span>
-                        <span class="text-xs text-slate-500 mt-1">Drag and drop or click to browse</span>
+                        </button>
                     </div>
 
-                    <!-- Image Preview & Overlay Wrapper -->
-                    <div class="relative max-w-full flex items-center justify-center pointer-events-none p-2 w-full h-full">
-                        <div class="relative max-w-full max-h-[500px] flex items-center justify-center">
-                            <img id="preview-2" class="hidden max-w-full max-h-[500px] rounded-2xl pointer-events-auto" alt="Preview 2">
-                            <!-- Precision Face Grid Canvas & Mesh Overlay Containers -->
-                            <div id="mesh-container-2" class="absolute inset-0 pointer-events-none hidden"></div>
-                            <div id="overlay-container-2" class="absolute inset-0 pointer-events-none"></div>
+                    <div class="connector-line-bottom"></div>
+
+                    <!-- Absolute Horizontal connection flow path (glowing pulse lines) -->
+                    <div class="absolute w-full h-[1px] left-0 hidden lg:block -translate-y-12 animate-line-flow opacity-0 transition-opacity duration-300 z-10"
+                        id="pulse-flow-indicator"
+                        style="background: linear-gradient(90deg, transparent, rgba(37,99,235,0.3), transparent);">
+                    </div>
+                </div>
+
+                <!-- Upload Panel 2 -->
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center justify-between px-2 text-xs font-semibold text-[#64748B]">
+                        <span class="font-plus-jakarta">TARGET SCANNER 02</span>
+                        <span id="meta-2-status" class="font-geist text-slate-500 font-bold">IDLE</span>
+                    </div>
+
+                    <div id="drop-2"
+                        class="upload-zone relative min-h-[340px] flex flex-col justify-center items-center cursor-pointer overflow-hidden hover:scale-[1.02] transition-all duration-300 group">
+                        <input type="file" id="file-2" class="hidden" accept="image/*">
+                        <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none z-10"
+                            id="scan-line-2"></div>
+
+                        <!-- Placeholder UI -->
+                        <div id="placeholder-2"
+                            class="text-center p-8 flex flex-col items-center w-full justify-center gap-2">
+                            <div
+                                class="upload-icon w-14 h-14 rounded-xl bg-[#F1F5F9] flex items-center justify-center border border-[#E2E8F0] mb-2">
+                                <svg class="w-7 h-7 text-[#64748B]" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                            </div>
+                            <span class="font-plus-jakarta text-sm font-semibold text-[#1E293B]">Load Subject
+                                Image</span>
+                            <span class="font-plus-jakarta text-xs text-slate-500 mt-1">Drag and drop or click to
+                                browse</span>
+                        </div>
+
+                        <!-- Image Preview & Overlay Wrapper -->
+                        <div
+                            class="relative max-w-full flex items-center justify-center pointer-events-none p-2 w-full h-full">
+                            <div
+                                class="face-image-wrapper relative max-w-full max-h-[500px] flex items-center justify-center">
+                                <img id="preview-2"
+                                    class="hidden max-w-full max-h-[500px] rounded-2xl pointer-events-auto"
+                                    alt="Preview 2">
+                                <div class="face-grid-overlay rounded-2xl"></div>
+                                <div class="face-scanline"></div>
+                                <!-- Precision Face Grid Canvas & Mesh Overlay Containers -->
+                                <div id="mesh-container-2" class="absolute inset-0 pointer-events-none hidden"></div>
+                                <div id="overlay-container-2" class="absolute inset-0 pointer-events-none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="metadata-card font-plus-jakarta flex justify-between items-center text-[11px] text-[#64748B]">
+                        <div class="flex flex-col">
+                            <span class="font-plus-jakarta font-semibold text-[#334155] truncate max-w-[150px]"
+                                id="meta-2-name">No File Loaded</span>
+                            <span class="font-plus-jakarta" id="meta-2-dims">Dimensions: ---</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-plus-jakarta" id="meta-2-size">Size: ---</span>
+                            <span class="font-plus-jakarta block text-[#64748B]" id="meta-2-type">Type: ---</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Metadata Panel 2 -->
-                <div class="surface-card rounded-2xl p-4 border border-[#E2E8F0] flex justify-between items-center text-[11px] text-[#64748B] bg-[#FFFFFF]">
-                    <div class="flex flex-col">
-                        <span class="font-semibold text-[#334155] truncate max-w-[150px]" id="meta-2-name">No File Loaded</span>
-                        <span id="meta-2-dims">Dimensions: ---</span>
-                    </div>
-                    <div class="text-right">
-                        <span id="meta-2-size">Size: ---</span>
-                        <span class="block text-[#64748B]" id="meta-2-type">Type: ---</span>
-                    </div>
-                </div>
-            </div>
-
-        </section>
+            </section>
+        </div>
 
     </main>
 
     <!-- Dialog / Diagnostics Panel -->
-    <div id="diagnostics-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div class="w-full max-w-lg surface-card border border-[#E2E8F0] rounded-xl p-6 shadow-2xl relative bg-slate-900/90">
-            <h4 class="text-sm font-bold text-[#0F172A] tracking-widest mb-4">SYSTEM DIAGNOSTICS</h4>
-            <div class="bg-black/40 rounded-2xl p-4 font-mono text-[10px] text-[#64748B] h-64 overflow-y-auto flex flex-col gap-2" id="diagnostics-log">
-                <p class="text-blue-500">> AEGIS AI Core Initialized.</p>
-                <p>> Neural architecture: ResNet50-ArcFace</p>
-                <p>> Device context: GPU/CUDA enabled</p>
-                <p>> Ready for biometric scanning.</p>
+    <div id="diagnostics-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 p-4">
+        <div
+            class="w-full max-w-lg surface-card border border-[#E2E8F0] rounded-2xl p-5 md:p-6 shadow-2xl relative overflow-hidden flex flex-col max-h-full">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500"></div>
+            <div class="flex justify-between items-center mb-4 mt-1 md:mt-2 shrink-0">
+                <h4 class="font-satoshi text-xs md:text-sm font-bold text-[#0F172A] tracking-widest flex items-center gap-2">
+                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                    SYSTEM DIAGNOSTICS
+                </h4>
             </div>
-            <div class="mt-6 flex justify-end">
-                <button id="close-diagnostics-btn" class="px-4 py-2 text-xs font-bold bg-[#F1F5F9] border border-[#E2E8F0] hover:bg-white/10 rounded-2xl transition">Close</button>
+            
+            <div class="bg-[#0B1220] border border-[#1E293B] rounded-xl p-4 md:p-5 font-geist text-[11px] md:text-xs text-[#94A3B8] max-h-[50vh] md:max-h-64 overflow-y-auto flex flex-col gap-3 shadow-inner"
+                id="diagnostics-log">
+                <p class="text-cyan-400 font-semibold flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></span> AEGIS AI Core Initialized.</p>
+                <p class="text-slate-300">> Neural architecture: <span class="text-blue-300">ResNet50-ArcFace</span></p>
+                <p class="text-slate-300">> Device context: <span class="text-emerald-400">GPU/CUDA enabled</span></p>
+                <p class="text-slate-300">> Ready for biometric scanning.</p>
+            </div>
+            <div class="mt-5 md:mt-6 flex justify-end shrink-0">
+                <button id="close-diagnostics-btn"
+                    class="btn-secondary px-6 py-2.5 text-sm w-full md:w-auto">Close Terminal</button>
             </div>
         </div>
     </div>
 
+    <!-- Drawer Toggle Script -->
+    <script>
+        (function () {
+            var toggle = document.getElementById('drawer-toggle');
+            var closeBtn = document.getElementById('drawer-close');
+            var drawer = document.getElementById('mobile-drawer');
+            var overlay = document.getElementById('drawer-overlay');
+
+            if (toggle && drawer && overlay) {
+                function openDrawer() {
+                    drawer.classList.add('open');
+                    overlay.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeDrawer() {
+                    drawer.classList.remove('open');
+                    overlay.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+                toggle.addEventListener('click', openDrawer);
+                overlay.addEventListener('click', closeDrawer);
+                if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+                // Close drawer on nav link click
+                drawer.querySelectorAll('.drawer-nav-link').forEach(function (link) {
+                    link.addEventListener('click', closeDrawer);
+                });
+            }
+        })();
+    </script>
+
     <!-- Modular Script -->
-    <script type="module" src="{{ url_for('static', path='js/scanner.js') }}?v=2" defer></script>
+    <script type="module" src="{{ url_for('static', path='js/scanner.js') }}?v=3" defer></script>
 
 </body>
+
 </html>

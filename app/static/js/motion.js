@@ -142,8 +142,17 @@ export function animateResults(similarity, distance, durationMs, label) {
         );
     }
 
-    // Animate circular SVG gauge
     if (circularFill) {
+        if (label === "Mirip sekali") {
+            circularFill.style.stroke = "#10b981"; 
+        } else if (label === "Mirip") {
+            circularFill.style.stroke = "#0ea5e9"; 
+        } else if (label === "Tidak mirip") {
+            circularFill.style.stroke = "#f59e0b"; 
+        } else {
+            circularFill.style.stroke = "#ef4444"; 
+        }
+
         const finalOffset = 264 - (264 * similarity);
         circularFill.animate(
             [{

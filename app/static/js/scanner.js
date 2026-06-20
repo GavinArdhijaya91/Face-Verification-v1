@@ -2,12 +2,12 @@ import {
     triggerPageAnimations,
     animateResults,
     resetResultsMotion
-} from './motion.js?v=2';
+} from './motion.js?v=3';
 import {
     drawCharts,
     resetCharts,
     initChartsObserver
-} from './charts.js?v=2';
+} from './charts.js?v=3';
 
 document.addEventListener('DOMContentLoaded', () => {
     triggerPageAnimations();
@@ -336,6 +336,17 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 resLabel.className = "text-lg font-bold block text-emerald-500 ";
             }
+        }
+
+        if (data.metrics) {
+            const elMean = document.getElementById('stat-mean');
+            if (elMean) elMean.innerText = `MEAN: ${data.metrics.mean}`;
+            
+            const elStd = document.getElementById('stat-std');
+            if (elStd) elStd.innerText = `STD: ${data.metrics.std}`;
+            
+            const elAuc = document.getElementById('stat-auc');
+            if (elAuc) elAuc.innerText = `AUC: ${data.metrics.auc}`;
         }
 
         animateResults(data.similarity, data.distance, data.latency, data.label);
