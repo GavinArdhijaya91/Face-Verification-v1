@@ -322,19 +322,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resTimestamp) resTimestamp.innerText = data.timestamp;
         if (resSysStatus) {
             resSysStatus.innerText = 'SUCCESS';
-            resSysStatus.className = 'font-orbitron font-semibold text-[10px] text-emerald-400';
+            resSysStatus.className = 'font-semibold text-[10px] text-emerald-400';
         }
 
         if (resLabel) {
             resLabel.innerText = data.label;
             if (data.label === "Tidak mirip sama sekali") {
-                resLabel.className = "text-lg font-bold font-orbitron block text-red-500 text-glow-red";
+                resLabel.className = "text-lg font-bold block text-red-500 ";
             } else if (data.label === "Tidak mirip") {
-                resLabel.className = "text-lg font-bold font-orbitron block text-amber-500 text-glow-amber";
+                resLabel.className = "text-lg font-bold block text-amber-500 ";
             } else if (data.label === "Mirip") {
-                resLabel.className = "text-lg font-bold font-orbitron block text-cyan-400 text-glow-cyan";
+                resLabel.className = "text-lg font-bold block text-cyan-400 ";
             } else {
-                resLabel.className = "text-lg font-bold font-orbitron block text-emerald-500 text-glow-emerald";
+                resLabel.className = "text-lg font-bold block text-emerald-500 ";
             }
         }
 

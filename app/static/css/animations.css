@@ -1,36 +1,19 @@
 @keyframes scan {
     0%, 100% {
         top: 0%;
-        opacity: 0.3;
+        opacity: 0.1;
     }
     25%, 75% {
-        opacity: 1;
+        opacity: 0.6;
     }
     50% {
         top: 100%;
-        opacity: 0.3;
+        opacity: 0.1;
     }
 }
 
 .animate-scan {
     animation: scan 4s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 15px rgba(34, 211, 238, 0.25);
-        opacity: 0.7;
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
-        opacity: 1;
-    }
-}
-
-.animate-pulse-glow {
-    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes line-flow {
@@ -54,6 +37,6 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, #22D3EE, #6366F1, transparent);
-    animation: line-flow 3s infinite linear;
+    background: linear-gradient(90deg, transparent, #2563EB, transparent);
+    animation: line-flow 2s infinite linear;
 }
