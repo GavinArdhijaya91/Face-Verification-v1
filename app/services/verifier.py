@@ -1,36 +1,18 @@
 import numpy as np
-import torch
-import torchvision.transforms as transforms
-from PIL import Image
-from app.models.resnet50_backbone import ResNet50Backbone
-import os
+from insightface.app import FaceAnalysis
+import onnxruntime as ort
 
 class Verifier:
-    def __init__(self, model_path: str = "checkpoint_epoch_9.pth"):
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        
-        self.model = ResNet50Backbone(embedding_size=512)
-        
-        if os.path.exists(model_path):
-            checkpoint = torch.load(model_path, map_location=self.device)
-            self.model.load_state_dict(checkpoint['backbone_state_dict'])
-            
-        self.model.to(self.device)
-        self.model.eval()
-        
-        self.transform = transforms.Compose([
-            transforms.Resize((112, 112)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
-        ])
+    def __init__(self):
+        self.app = FaceAnalysis(name='buffalo_l')
+        providers = ort.get_available_providers()
+        ctx_id = 0 if 'CUDAExecutionProvider' in providers else -1
+        # Mengurangi det_size menjadi 320x320 agar jauh lebih cepat di CPU
+        self.app.prepare(ctx_id=ctx_id, det_size=(320, 320))
 
-    def extract_embedding(self, face_image: Image.Image):
-        img_tensor = self.transform(face_image).unsqueeze(0).to(self.device)
-        
-        with torch.no_grad():
-            embedding = self.model(img_tensor)
-            
-        return embedding.cpu().numpy().flatten()
+    def analyze(self, image_np):
+        faces = self.app.get(image_np)
+        return faces
 
     def calculate_similarity(self, emb1, emb2):
         dot_product = np.dot(emb1, emb2)

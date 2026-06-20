@@ -1,17 +1,14 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from typing import List
-import shutil
 import os
-from PIL import Image
-import io
+import cv2
+import numpy as np
 
-from app.services.detector import FaceDetector
 from app.services.verifier import Verifier
 
 router = APIRouter(prefix="/verify", tags=["verification"])
 
-detector = FaceDetector()
-verifier = Verifier(model_path="checkpoint_epoch_9.pth")
+verifier = Verifier()
 
 @router.post("/")
 async def verify_faces(files: List[UploadFile] = File(...)):
@@ -33,34 +30,37 @@ async def verify_faces(files: List[UploadFile] = File(...)):
         buffer.write(contents2)
         
     try:
-        img1 = Image.open(io.BytesIO(contents1)).convert('RGB')
-        img2 = Image.open(io.BytesIO(contents2)).convert('RGB')
+        nparr1 = np.frombuffer(contents1, np.uint8)
+        img1 = cv2.imdecode(nparr1, cv2.IMREAD_COLOR)
+        
+        nparr2 = np.frombuffer(contents2, np.uint8)
+        img2 = cv2.imdecode(nparr2, cv2.IMREAD_COLOR)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid image format: {str(e)}")
 
-    cropped1, box1, lm1 = detector.detect_and_crop(img1)
-    if cropped1 is None:
+    faces1 = verifier.analyze(img1)
+    if not faces1:
         raise HTTPException(status_code=400, detail="Wajah tidak terdeteksi di gambar pertama.")
 
-    cropped2, box2, lm2 = detector.detect_and_crop(img2)
-    if cropped2 is None:
+    faces2 = verifier.analyze(img2)
+    if not faces2:
         raise HTTPException(status_code=400, detail="Wajah tidak terdeteksi di gambar kedua.")
 
-    emb1 = verifier.extract_embedding(cropped1)
-    emb2 = verifier.extract_embedding(cropped2)
-    
-    cosine_sim = verifier.calculate_similarity(emb1, emb2)
+    face1 = faces1[0]
+    face2 = faces2[0]
+
+    cosine_sim = verifier.calculate_similarity(face1.embedding, face2.embedding)
     percentage = max(0.0, min(100.0, ((cosine_sim + 0.2) / 1.2) * 100))
     label = verifier.classify(cosine_sim)
 
-    w1, h1 = img1.width, img1.height
-    w2, h2 = img2.width, img2.height
+    h1, w1 = img1.shape[:2]
+    h2, w2 = img2.shape[:2]
 
-    def format_landmarks(lm, w, h):
-        if not lm:
+    def format_landmarks(kps, w, h):
+        if kps is None:
             return []
         labels = ["Left Eye", "Right Eye", "Nose", "Mouth Left", "Mouth Right"]
-        return [{"x": float((point[0]/w)*100), "y": float((point[1]/h)*100), "label": labels[i]} for i, point in enumerate(lm)]
+        return [{"x": float((pt[0]/w)*100), "y": float((pt[1]/h)*100), "label": labels[i]} for i, pt in enumerate(kps)]
 
     return {
         "similarity": float(percentage / 100.0),
@@ -71,21 +71,21 @@ async def verify_faces(files: List[UploadFile] = File(...)):
         "faces": [
             {
                 "box": {
-                    "left": float((box1[0]/w1)*100), 
-                    "top": float((box1[1]/h1)*100), 
-                    "width": float(((box1[2]-box1[0])/w1)*100), 
-                    "height": float(((box1[3]-box1[1])/h1)*100)
+                    "left": float((face1.bbox[0]/w1)*100), 
+                    "top": float((face1.bbox[1]/h1)*100), 
+                    "width": float(((face1.bbox[2]-face1.bbox[0])/w1)*100), 
+                    "height": float(((face1.bbox[3]-face1.bbox[1])/h1)*100)
                 },
-                "landmarks": format_landmarks(lm1, w1, h1)
+                "landmarks": format_landmarks(face1.kps, w1, h1)
             },
             {
                 "box": {
-                    "left": float((box2[0]/w2)*100), 
-                    "top": float((box2[1]/h2)*100), 
-                    "width": float(((box2[2]-box2[0])/w2)*100), 
-                    "height": float(((box2[3]-box2[1])/h2)*100)
+                    "left": float((face2.bbox[0]/w2)*100), 
+                    "top": float((face2.bbox[1]/h2)*100), 
+                    "width": float(((face2.bbox[2]-face2.bbox[0])/w2)*100), 
+                    "height": float(((face2.bbox[3]-face2.bbox[1])/h2)*100)
                 },
-                "landmarks": format_landmarks(lm2, w2, h2)
+                "landmarks": format_landmarks(face2.kps, w2, h2)
             }
         ]
     }
