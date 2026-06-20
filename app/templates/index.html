@@ -109,12 +109,12 @@
                     <span id="meta-1-status" class="text-slate-500">IDLE</span>
                 </div>
                 
-                <div id="drop-1" class="glass-card rounded-3xl relative aspect-[4/3] flex flex-col justify-center items-center cursor-pointer overflow-hidden border border-white/10 hover:border-cyan-400/30 hover:scale-[1.02] transition-all duration-300 group">
+                <div id="drop-1" class="glass-card rounded-3xl relative min-h-[300px] flex flex-col justify-center items-center cursor-pointer overflow-hidden border border-white/10 hover:border-cyan-400/30 hover:scale-[1.02] transition-all duration-300 group">
                     <input type="file" id="file-1" class="hidden" accept="image/*">
-                    <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none" id="scan-line-1"></div>
+                    <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none z-10" id="scan-line-1"></div>
                     
                     <!-- Placeholder UI -->
-                    <div id="placeholder-1" class="text-center p-6 flex flex-col items-center">
+                    <div id="placeholder-1" class="text-center p-6 flex flex-col items-center w-full justify-center">
                         <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 mb-4 transition-colors">
                             <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -125,9 +125,9 @@
                     </div>
 
                     <!-- Image Preview & Overlay Wrapper -->
-                    <div class="absolute inset-0 flex items-center justify-center p-2 pointer-events-none">
-                        <div class="relative max-w-full max-h-full flex items-center justify-center">
-                            <img id="preview-1" class="hidden max-w-full max-h-full rounded-2xl pointer-events-auto" alt="Preview 1">
+                    <div class="relative max-w-full flex items-center justify-center pointer-events-none p-2 w-full h-full">
+                        <div class="relative max-w-full max-h-[500px] flex items-center justify-center">
+                            <img id="preview-1" class="hidden max-w-full max-h-[500px] rounded-2xl pointer-events-auto" alt="Preview 1">
                             <!-- Precision Face Grid Canvas & Mesh Overlay Containers -->
                             <div id="mesh-container-1" class="absolute inset-0 pointer-events-none hidden"></div>
                             <div id="overlay-container-1" class="absolute inset-0 pointer-events-none"></div>
@@ -176,12 +176,12 @@
                     <span id="meta-2-status" class="text-slate-500">IDLE</span>
                 </div>
                 
-                <div id="drop-2" class="glass-card rounded-3xl relative aspect-[4/3] flex flex-col justify-center items-center cursor-pointer overflow-hidden border border-white/10 hover:border-cyan-400/30 hover:scale-[1.02] transition-all duration-300 group">
+                <div id="drop-2" class="glass-card rounded-3xl relative min-h-[300px] flex flex-col justify-center items-center cursor-pointer overflow-hidden border border-white/10 hover:border-cyan-400/30 hover:scale-[1.02] transition-all duration-300 group">
                     <input type="file" id="file-2" class="hidden" accept="image/*">
-                    <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none" id="scan-line-2"></div>
+                    <div class="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 opacity-0 pointer-events-none z-10" id="scan-line-2"></div>
                     
                     <!-- Placeholder UI -->
-                    <div id="placeholder-2" class="text-center p-6 flex flex-col items-center">
+                    <div id="placeholder-2" class="text-center p-6 flex flex-col items-center w-full justify-center">
                         <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 mb-4 transition-colors">
                             <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -192,9 +192,9 @@
                     </div>
 
                     <!-- Image Preview & Overlay Wrapper -->
-                    <div class="absolute inset-0 flex items-center justify-center p-2 pointer-events-none">
-                        <div class="relative max-w-full max-h-full flex items-center justify-center">
-                            <img id="preview-2" class="hidden max-w-full max-h-full rounded-2xl pointer-events-auto" alt="Preview 2">
+                    <div class="relative max-w-full flex items-center justify-center pointer-events-none p-2 w-full h-full">
+                        <div class="relative max-w-full max-h-[500px] flex items-center justify-center">
+                            <img id="preview-2" class="hidden max-w-full max-h-[500px] rounded-2xl pointer-events-auto" alt="Preview 2">
                             <!-- Precision Face Grid Canvas & Mesh Overlay Containers -->
                             <div id="mesh-container-2" class="absolute inset-0 pointer-events-none hidden"></div>
                             <div id="overlay-container-2" class="absolute inset-0 pointer-events-none"></div>
