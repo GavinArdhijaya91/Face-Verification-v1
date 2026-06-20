@@ -190,6 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const startCamera = async (idx) => {
             try {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert("Camera access is not supported. Please ensure you are using HTTPS or a modern browser.");
+                    return;
+                }
                 const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
                 const video = document.getElementById(`video-${idx}`);
                 const cameraUI = document.getElementById(`camera-ui-${idx}`);
@@ -202,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (err) {
                 console.error("Error accessing camera: ", err);
-                alert("Cannot access camera. Please check permissions.");
+                alert("Cannot access camera. Please check permissions or ensure you are on HTTPS.");
             }
         };
 
