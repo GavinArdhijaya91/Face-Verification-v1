@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+*.pyo
+.venv/
+env/
+.git
+.gitignore
+*.zip
+*.tar.gz
+# Optional: Abaikan vercel.json jika sudah pakai Docker
+vercel.json
