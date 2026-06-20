@@ -23,9 +23,9 @@ class Verifier:
     def classify(self, similarity: float):
         if similarity <= 0.20:
             return "Tidak mirip sama sekali"
-        elif similarity <= 0.40:
+        elif similarity <= 0.35:
             return "Tidak mirip"
-        elif similarity <= 0.60:
+        elif similarity <= 0.50:
             return "Mirip"
         else:
             return "Mirip sekali"
