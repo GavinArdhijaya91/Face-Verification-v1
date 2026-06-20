@@ -21,11 +21,15 @@ class Verifier:
         return float(dot_product / (norm_a * norm_b))
     
     def classify(self, similarity: float):
-        if similarity <= 0.20:
+        # 0.00 - 0.30: Tidak mirip sama sekali
+        # 0.31 - 0.45: Tidak mirip
+        # 0.46 - 0.65: Mirip
+        # 0.66 - 1.00: Mirip sekali
+        if similarity <= 0.30:
             return "Tidak mirip sama sekali"
-        elif similarity <= 0.35:
+        elif similarity <= 0.45:
             return "Tidak mirip"
-        elif similarity <= 0.50:
+        elif similarity <= 0.65:
             return "Mirip"
         else:
             return "Mirip sekali"

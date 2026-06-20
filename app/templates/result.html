@@ -148,7 +148,7 @@
             
             <!-- Result Panel -->
             <div class="glass-card rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between" id="result-card">
-                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                <div class="absolute top-0 left-0 w-full h-[2px] animate-line-flow opacity-70"></div>
                 
                 <h3 class="text-xs font-bold text-slate-400 tracking-widest uppercase mb-4 font-orbitron">Biometric Verification Summary</h3>
                 
@@ -206,27 +206,26 @@
                 <div class="flex flex-col gap-3 text-xs">
                     <div class="flex items-center justify-between p-2 rounded-lg bg-red-500/5 border border-red-500/10">
                         <span class="text-red-400 font-semibold">Tidak mirip sama sekali</span>
-                        <span class="font-orbitron text-red-300">0.00 – 0.20</span>
+                        <span class="font-orbitron text-red-300">0.00 – 0.30</span>
                     </div>
                     <div class="flex items-center justify-between p-2 rounded-lg bg-amber-500/5 border border-amber-500/10">
                         <span class="text-amber-400 font-semibold">Tidak mirip</span>
-                        <span class="font-orbitron text-amber-300">0.21 – 0.35</span>
+                        <span class="font-orbitron text-amber-300">0.31 – 0.45</span>
                     </div>
                     <div class="flex items-center justify-between p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10">
                         <span class="text-cyan-400 font-semibold">Mirip</span>
-                        <span class="font-orbitron text-cyan-300">0.36 – 0.50</span>
+                        <span class="font-orbitron text-cyan-300">0.46 – 0.65</span>
                     </div>
                     <div class="flex items-center justify-between p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
                         <span class="text-emerald-400 font-semibold">Mirip sekali</span>
-                        <span class="font-orbitron text-emerald-300">0.51 – 1.00</span>
+                        <span class="font-orbitron text-emerald-300">0.66 – 1.00</span>
                     </div>
                 </div>
             </div>
-
         </section>
 
         <!-- Bottom Analytics -->
-        <section class="flex flex-col gap-3">
+        <section class="flex flex-col gap-3" id="analytics-section">
             <h3 class="text-xs font-bold text-slate-400 tracking-widest uppercase px-1 font-orbitron">Biometric Engine Analytics</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -334,7 +333,7 @@
     </div>
 
     <!-- Modular Script -->
-    <script type="module" src="static/js/scanner.js"></script>
+    <script type="module" src="{{ url_for('static', path='js/scanner.js') }}?v=2" defer></script>
 
 </body>
 </html>

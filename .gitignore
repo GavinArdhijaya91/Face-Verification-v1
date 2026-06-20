@@ -37,3 +37,8 @@ app/static/outputs/
 # Documentation / Markdown
 DESIGN.md
 ARCHITECTURE.md
+
+# Node
+node_modules/
+package-lock.json
+package.json 

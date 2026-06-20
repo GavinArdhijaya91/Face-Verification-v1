@@ -1,5 +1,13 @@
-import { triggerPageAnimations, animateResults, resetResultsMotion } from './motion.js';
-import { drawCharts, resetCharts } from './charts.js';
+import {
+    triggerPageAnimations,
+    animateResults,
+    resetResultsMotion
+} from './motion.js?v=2';
+import {
+    drawCharts,
+    resetCharts,
+    initChartsObserver
+} from './charts.js?v=2';
 
 document.addEventListener('DOMContentLoaded', () => {
     triggerPageAnimations();
@@ -69,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             previewEl.src = e.target.result;
             previewEl.classList.remove('hidden');
             placeholderEl.classList.add('hidden');
-            
+
             const nameEl = document.getElementById(`meta-${idx}-name`);
             const dimsEl = document.getElementById(`meta-${idx}-dims`);
             const sizeEl = document.getElementById(`meta-${idx}-size`);
@@ -131,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         box.style.top = `${faceData.box.top}%`;
         box.style.width = `${faceData.box.width}%`;
         box.style.height = `${faceData.box.height}%`;
-        
+
         const bracketSpan = document.createElement('span');
         box.appendChild(bracketSpan);
         container.appendChild(box);
@@ -210,12 +218,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!file1Data || !file2Data) return;
 
                 verifyBtn.disabled = true;
-                
+
                 const scanLine1 = document.getElementById('scan-line-1');
                 const scanLine2 = document.getElementById('scan-line-2');
                 if (scanLine1) scanLine1.classList.add('animate-scan', 'opacity-100');
                 if (scanLine2) scanLine2.classList.add('animate-scan', 'opacity-100');
-                
+
 
 
                 const status1 = document.getElementById('meta-1-status');
@@ -267,11 +275,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 try {
                     const res1 = await fetch('static/demo_face_1.png');
                     const blob1 = await res1.blob();
-                    file1Data = new File([blob1], 'demo_face_1.png', { type: 'image/png' });
+                    file1Data = new File([blob1], 'demo_face_1.png', {
+                        type: 'image/png'
+                    });
 
                     const res2 = await fetch('static/demo_face_2.png');
                     const blob2 = await res2.blob();
-                    file2Data = new File([blob2], 'demo_face_2.png', { type: 'image/png' });
+                    file2Data = new File([blob2], 'demo_face_2.png', {
+                        type: 'image/png'
+                    });
 
                     await showPreview(file1Data, preview1, placeholder1, 1);
                     await showPreview(file2Data, preview2, placeholder2, 2);
@@ -327,14 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         animateResults(data.similarity, data.distance, data.latency, data.label);
-        
-        drawCharts();
-        setInterval(() => {
-            resetCharts();
-            setTimeout(() => {
-                drawCharts();
-            }, 600); // Wait for CSS reset transitions to complete before redrawing
-        }, 5000); 
+        initChartsObserver();
     }
 
     // Diagnostics Modal
@@ -356,8 +361,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (diagnosticsModal) {
                 diagnosticsModal.classList.remove('hidden');
                 diagnosticsModal.animate(
-                    [{ opacity: 0 }, { opacity: 1 }],
-                    { duration: 200, fill: 'forwards' }
+                    [{
+                        opacity: 0
+                    }, {
+                        opacity: 1
+                    }], {
+                        duration: 200,
+                        fill: 'forwards'
+                    }
                 );
             }
             logDiagnostic("Diagnostics run triggered.");
@@ -371,13 +382,21 @@ document.addEventListener('DOMContentLoaded', () => {
         closeDiagnosticsBtn.addEventListener('click', () => {
             if (diagnosticsModal) {
                 const anim = diagnosticsModal.animate(
-                    [{ opacity: 1 }, { opacity: 0 }],
-                    { duration: 200, fill: 'forwards' }
+                    [{
+                        opacity: 1
+                    }, {
+                        opacity: 0
+                    }], {
+                        duration: 200,
+                        fill: 'forwards'
+                    }
                 );
                 anim.addEventListener('finish', () => {
                     diagnosticsModal.classList.add('hidden');
                     diagnosticsModal.style.opacity = '';
-                }, { once: true });
+                }, {
+                    once: true
+                });
             }
         });
     }

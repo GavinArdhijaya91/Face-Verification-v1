@@ -7,23 +7,42 @@ function animateEl(el, keyframes, options) {
     anim.addEventListener('finish', () => {
         anim.commitStyles();
         anim.cancel();
-    }, { once: true });
+    }, {
+        once: true
+    });
     return anim;
 }
 
 export function triggerPageAnimations() {
     // Page fade-in: body opacity 0 -> 1
     document.body.animate(
-        [{ opacity: 0 }, { opacity: 1 }],
-        { duration: 600, fill: 'forwards', easing: 'ease-out' }
+        [{
+            opacity: 0
+        }, {
+            opacity: 1
+        }], {
+            duration: 600,
+            fill: 'forwards',
+            easing: 'ease-out'
+        }
     );
 
     // Cards slide up + fade in with stagger
     const cards = document.querySelectorAll('.glass-card');
     cards.forEach((card, i) => {
         card.animate(
-            [{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'translateY(0)' }],
-            { duration: 500, delay: 100 + i * 60, fill: 'forwards', easing: 'ease-out' }
+            [{
+                opacity: 0,
+                transform: 'translateY(20px)'
+            }, {
+                opacity: 1,
+                transform: 'translateY(0)'
+            }], {
+                duration: 500,
+                delay: 100 + i * 60,
+                fill: 'forwards',
+                easing: 'ease-out'
+            }
         );
     });
 
@@ -31,12 +50,23 @@ export function triggerPageAnimations() {
     const verifyBtn = document.getElementById('verify-btn');
     if (verifyBtn) {
         verifyBtn.animate(
-            [
-                { transform: 'scale(0.95)', boxShadow: '0 0 10px rgba(34,211,238,0.2)' },
-                { transform: 'scale(1.05)', boxShadow: '0 0 25px rgba(34,211,238,0.6)' },
-                { transform: 'scale(0.95)', boxShadow: '0 0 10px rgba(34,211,238,0.2)' }
-            ],
-            { duration: 2000, iterations: Infinity, easing: 'ease-in-out' }
+            [{
+                    transform: 'scale(0.95)',
+                    boxShadow: '0 0 10px rgba(34,211,238,0.2)'
+                },
+                {
+                    transform: 'scale(1.05)',
+                    boxShadow: '0 0 25px rgba(34,211,238,0.6)'
+                },
+                {
+                    transform: 'scale(0.95)',
+                    boxShadow: '0 0 10px rgba(34,211,238,0.2)'
+                }
+            ], {
+                duration: 2000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            }
         );
     }
 
@@ -45,14 +75,28 @@ export function triggerPageAnimations() {
     hoverCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
             card.animate(
-                [{ transform: 'scale(1)' }, { transform: 'scale(1.03)' }],
-                { duration: 200, fill: 'forwards', easing: 'ease-out' }
+                [{
+                    transform: 'scale(1)'
+                }, {
+                    transform: 'scale(1.03)'
+                }], {
+                    duration: 200,
+                    fill: 'forwards',
+                    easing: 'ease-out'
+                }
             );
         });
         card.addEventListener('mouseleave', () => {
             card.animate(
-                [{ transform: 'scale(1.03)' }, { transform: 'scale(1)' }],
-                { duration: 200, fill: 'forwards', easing: 'ease-out' }
+                [{
+                    transform: 'scale(1.03)'
+                }, {
+                    transform: 'scale(1)'
+                }], {
+                    duration: 200,
+                    fill: 'forwards',
+                    easing: 'ease-out'
+                }
             );
         });
     });
@@ -67,16 +111,34 @@ export function animateResults(similarity, distance, durationMs, label) {
     // Card pop-in
     if (resultCard) {
         resultCard.animate(
-            [{ transform: 'scale(0.95)' }, { transform: 'scale(1.02)' }, { transform: 'scale(1)' }],
-            { duration: 400, fill: 'forwards', easing: 'ease-out' }
+            [{
+                transform: 'scale(0.95)'
+            }, {
+                transform: 'scale(1.02)'
+            }, {
+                transform: 'scale(1)'
+            }], {
+                duration: 400,
+                fill: 'forwards',
+                easing: 'ease-out'
+            }
         );
     }
 
     // Score block scale 0.8 -> 1
     if (resultScoreBlock) {
         resultScoreBlock.animate(
-            [{ opacity: 0, transform: 'scale(0.8)' }, { opacity: 1, transform: 'scale(1)' }],
-            { duration: 500, fill: 'forwards', easing: 'ease-out' }
+            [{
+                opacity: 0,
+                transform: 'scale(0.8)'
+            }, {
+                opacity: 1,
+                transform: 'scale(1)'
+            }], {
+                duration: 500,
+                fill: 'forwards',
+                easing: 'ease-out'
+            }
         );
     }
 
@@ -84,8 +146,15 @@ export function animateResults(similarity, distance, durationMs, label) {
     if (circularFill) {
         const finalOffset = 264 - (264 * similarity);
         circularFill.animate(
-            [{ strokeDashoffset: '264' }, { strokeDashoffset: String(finalOffset) }],
-            { duration: 1500, fill: 'forwards', easing: 'ease-out' }
+            [{
+                strokeDashoffset: '264'
+            }, {
+                strokeDashoffset: String(finalOffset)
+            }], {
+                duration: 1500,
+                fill: 'forwards',
+                easing: 'ease-out'
+            }
         );
         // Commit final style
         setTimeout(() => {
