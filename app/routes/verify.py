@@ -50,8 +50,9 @@ async def verify_faces(files: List[UploadFile] = File(...)):
     face2 = faces2[0]
 
     cosine_sim = verifier.calculate_similarity(face1.embedding, face2.embedding)
-    percentage = max(0.0, min(100.0, ((cosine_sim + 0.2) / 1.2) * 100))
-    label = verifier.classify(cosine_sim)
+    normalized_sim = max(0.0, min(1.0, (cosine_sim + 0.2) / 1.2))
+    percentage = normalized_sim * 100
+    label = verifier.classify(normalized_sim)
 
     h1, w1 = img1.shape[:2]
     h2, w2 = img2.shape[:2]
