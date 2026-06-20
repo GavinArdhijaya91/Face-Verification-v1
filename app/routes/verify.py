@@ -41,11 +41,11 @@ async def verify_faces(files: List[UploadFile] = File(...)):
 
     faces1 = verifier.analyze(img1)
     if not faces1:
-        raise HTTPException(status_code=400, detail="Wajah tidak terdeteksi di gambar pertama.")
+        raise HTTPException(status_code=400, detail="Wajah tidak terdeteksi di gambar pertama. Harap pastikan Anda mengunggah foto wajah manusia.")
 
     faces2 = verifier.analyze(img2)
     if not faces2:
-        raise HTTPException(status_code=400, detail="Wajah tidak terdeteksi di gambar kedua.")
+        raise HTTPException(status_code=400, detail="Wajah tidak terdeteksi di gambar kedua. Harap pastikan Anda mengunggah foto wajah manusia.")
 
     face1 = faces1[0]
     face2 = faces2[0]

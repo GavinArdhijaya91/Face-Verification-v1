@@ -351,7 +351,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             window.location.href = 'result';
                         }, 2000);
                     } else {
-                        alert("Biometric verification engine encountered an error.");
+                        const errorData = await response.json().catch(() => null);
+                        if (errorData && errorData.detail) {
+                            alert("Kesalahan: " + errorData.detail);
+                        } else {
+                            alert("Biometric verification engine encountered an error.");
+                        }
                         resetSystem();
                     }
                 } catch (error) {
