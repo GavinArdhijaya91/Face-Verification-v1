@@ -216,6 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (scanLine1) scanLine1.classList.add('animate-scan', 'opacity-100');
                 if (scanLine2) scanLine2.classList.add('animate-scan', 'opacity-100');
                 
+
+
                 const status1 = document.getElementById('meta-1-status');
                 const status2 = document.getElementById('meta-2-status');
                 if (status1) status1.innerText = 'SCANNING...';
@@ -325,7 +327,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         animateResults(data.similarity, data.distance, data.latency, data.label);
+        
         drawCharts();
+        setInterval(() => {
+            resetCharts();
+            setTimeout(() => {
+                drawCharts();
+            }, 600); // Wait for CSS reset transitions to complete before redrawing
+        }, 5000); 
     }
 
     // Diagnostics Modal
