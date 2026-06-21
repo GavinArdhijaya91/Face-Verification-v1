@@ -1,4 +1,4 @@
-[![(My App Railway)](https://img.shields.io/badge/Railway-131415?style=for-the-badge&logo=railway&logoColor=white)](https://face-verification-v1-gavin.up.railway.app/)
+[![My Railway App](https://img.shields.io/badge/Railway-131415?style=for-the-badge&logo=railway&logoColor=white)](https://face-verification-v1-gavin.up.railway.app/)
 
 The verification of faces program, which it detecting the percentage of similarity on the 2 faces who'm these faces are different/same.
 
